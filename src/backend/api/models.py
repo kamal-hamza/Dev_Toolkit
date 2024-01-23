@@ -42,4 +42,10 @@ class customUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class tasks(models.Model):
+    user = models.ForeignKey(customUser, on_delete=models.CASCADE)
+    title = models.CharField(max_length=128)
+    description = models.CharField(max_length=128)
+    deadline = models.DateField()
     
