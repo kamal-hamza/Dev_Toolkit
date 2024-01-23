@@ -1,10 +1,17 @@
 import './App.css';
-import User_List from './components/User_List.js';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import UserList from './components/UserList.js';
+import UserCreationForm from './components/UserCreationForm.js';
 
 function App() {
   return (
     <div className='App'>
-      <User_List />
+      <Router>
+        <Routes>
+          <Route path='/create_user' element={<UserCreationForm />} />
+          <Route path='/userAPI' element={<UserList />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

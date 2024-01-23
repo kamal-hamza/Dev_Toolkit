@@ -1,7 +1,7 @@
-import react, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
 
-function User_List() {
+function UserList() {
         const[data, setData] = useState(null);
         const[error, setError] = useState(null);
 
@@ -25,4 +25,4 @@ function User_List() {
     );
 }
 
-export default User_List;
+export default UserList;
