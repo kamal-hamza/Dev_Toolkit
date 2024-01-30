@@ -80,16 +80,24 @@ const Calendar = () => {
 
     
 
-    const handleDayClick= (day) => {
-        // Implement check for tasks in this day
-        // ask django backend for tasks
-        const response = axios.post('http://127.0.0.1:8000/return_tasks/', day, {
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-        });
-        // do a popup to show tasks for the day
-    }
+    const handleDayClick = async (day) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token not found. user is not logged in');
+                return;
+            }
+            const response = await axios.post('http://127.0.0.1:8000/return_tasks/', {day}, {
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Authorization': 'Token ' + token,
+                }
+            });
+            console.log(response.data.tasks)
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className='calendar'>

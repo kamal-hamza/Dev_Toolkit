@@ -1,12 +1,16 @@
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from rest_framework import generics, status
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import customUserSerializer, tasksSerializer
 from . models import customUser, tasks
 from django.middleware.csrf import get_token
 from django.contrib.auth.hashers import make_password
+import json
 
 
 # Create your views here.
@@ -48,19 +52,25 @@ class login_user(APIView):
             print(user)
             if user is not None:
                 login(request, user)
-                return JsonResponse({'message': 'User logged in successfully'},status=status.HTTP_200_OK)
+                token, created = Token.objects.get_or_create(user=user)
+                print("user logged in")
+                return JsonResponse({'token': token.key, 'message': 'User logged in successfully'},status=status.HTTP_200_OK)
             else:
                 return JsonResponse({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
             
 class return_tasks(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
-        user = request.user
         date = request.data.get('day');
+        currentUser = request.user
         if not date:
             return JsonResponse({'error': 'Invalid date passed'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            print(date)
-            print(user)
+            tasks_data = tasks.objects.filter(user=currentUser)
+            serializer = tasksSerializer(tasks_data, many=True)
+            return JsonResponse({'tasks': serializer.data, 'message': 'Here are the tasks'}, status=status.HTTP_200_OK)
 
 
 

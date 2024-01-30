@@ -26,11 +26,14 @@ function UserLogin() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            axios.post('http://127.0.0.1:8000/login_user/', formData, {
+            const response = await axios.post('http://127.0.0.1:8000/login_user/', formData, {
                 headers: {
                     'X-CSRFToken': csrfToken
                 }
             });
+            console.log(response.data.token);
+            const token = response.data.token;
+            localStorage.setItem('token', token)
         } catch (error) {
             console.log("An error occurred when retriving user", error);
         }
