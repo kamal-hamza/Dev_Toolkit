@@ -1,10 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
+import axios from 'axios'
 import '../CSS/Calendar.css'
 
 const Calendar = () => {
 
+    const [csrfToken, setCsrfToken] = useState('');
     const [currentMonth, setCurrentMonth] = useState(moment());
+
+    useEffect(() => {
+        const fetchCsrfToken = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/csrfToken/');
+                setCsrfToken(response.data.csrfToken);
+            } catch (error) {
+                console.log("An error occured while fetching csrf token:", error);
+            }
+        };
+        if (!csrfToken) {
+            fetchCsrfToken();    
+        }
+    }, [csrfToken]);
 
     const nextMonth = () => {
         setCurrentMonth(currentMonth.clone().add(1, 'month'));
@@ -36,11 +52,12 @@ const Calendar = () => {
         let day = startDate.clone();
 
         while (day.isBefore(endDate, 'day')) {
+            const day_val = day.format('YYYY-MM-DD');
             days.push(
                 <div
                     key={day.format('YYYY-MM-DD')}
                     className={`day ${day.isSame(currentMonth, 'month') ? '' : 'inactive'}`}
-                    onClick={() => handleDayClick(day)}
+                    onClick={() => handleDayClick(day_val)}
                 >
                     {day.format('D')}
                 </div>
@@ -66,6 +83,11 @@ const Calendar = () => {
     const handleDayClick= (day) => {
         // Implement check for tasks in this day
         // ask django backend for tasks
+        const response = axios.post('http://127.0.0.1:8000/return_tasks/', day, {
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+        });
         // do a popup to show tasks for the day
     }
 

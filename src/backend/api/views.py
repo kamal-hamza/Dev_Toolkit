@@ -42,8 +42,8 @@ class login_user(APIView):
         if not email or not password:
             return JsonResponse({'error': 'Email and Password are required fields'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            print(email)
-            print(password)
+            # print(email)
+            # print(password)
             user = authenticate(request, email=email, password=password)
             print(user)
             if user is not None:
@@ -51,6 +51,16 @@ class login_user(APIView):
                 return JsonResponse({'message': 'User logged in successfully'},status=status.HTTP_200_OK)
             else:
                 return JsonResponse({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+class return_tasks(APIView):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        date = request.data.get('day');
+        if not date:
+            return JsonResponse({'error': 'Invalid date passed'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            print(date)
+            print(user)
 
 
 

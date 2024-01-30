@@ -7,4 +7,5 @@ urlpatterns = [
     path('csrfToken/', views.get_csrf_token, name='get_csrf_token'),
     path('login_user/', views.login_user.as_view(), name='login_user'),
     path('tasksAPI/', views.tasksAPI.as_view(), name='tasksAPI'),
+    path('return_tasks/', views.return_tasks.as_view(), name='return_tasks'),
 ]
