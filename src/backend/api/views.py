@@ -10,7 +10,6 @@ from .serializers import customUserSerializer, tasksSerializer
 from . models import customUser, tasks
 from django.middleware.csrf import get_token
 from django.contrib.auth.hashers import make_password
-import json
 
 
 # Create your views here.
