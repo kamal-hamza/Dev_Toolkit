@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import moment from 'moment';
-import axios from 'axios'
-import '../CSS/Calendar.css'
+import axios from 'axios';
+import '../CSS/Calendar.css';
 
 const Calendar = () => {
 
     const [csrfToken, setCsrfToken] = useState('');
     const [currentMonth, setCurrentMonth] = useState(moment());
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         const fetchCsrfToken = async () => {
@@ -93,16 +97,37 @@ const Calendar = () => {
                     'Authorization': 'Token ' + token,
                 }
             });
-            console.log(response.data.tasks)
+            setTasks(response.data.tasks)
+            setPopupVisible(true);
         } catch (error) {
             console.log(error);
+            return;
         }
+    };
+
+    const ViewTasks = (tasks) => {
+        return (
+            <div>
+
+            </div>
+        );
+    };
+
+    const popupContent= (tasks) => {
+        return (
+            <div>
+                {ViewTasks(tasks)}
+            </div>
+        );
     };
 
     return (
         <div className='calendar'>
             {renderHeader()}
             <div className='days'>{renderDays()}</div>
+            {/* <Popup open={popupVisible} onClose={setPopupVisible(false)}>
+                {popupContent()}
+            </Popup> */}
         </div>
     );
 };

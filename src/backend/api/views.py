@@ -45,8 +45,6 @@ class login_user(APIView):
         if not email or not password:
             return JsonResponse({'error': 'Email and Password are required fields'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            # print(email)
-            # print(password)
             user = authenticate(request, email=email, password=password)
             print(user)
             if user is not None:
