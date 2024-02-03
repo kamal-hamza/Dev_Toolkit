@@ -55,6 +55,14 @@ class login_user(APIView):
             else:
                 return JsonResponse({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
             
+class return_user(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def get(self, request):
+        user = request.user
+        return Response({'id': user.id})
+    
 class return_tasks(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -65,9 +73,22 @@ class return_tasks(APIView):
         if not date:
             return JsonResponse({'error': 'Invalid date passed'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            tasks_data = tasks.objects.filter(user=currentUser)
+            print(date)
+            tasks_data = tasks.objects.filter(user=currentUser, deadline=date)
             serializer = tasksSerializer(tasks_data, many=True)
             return JsonResponse({'tasks': serializer.data, 'message': 'Here are the tasks'}, status=status.HTTP_200_OK)
+
+class create_task(generics.CreateAPIView):
+    queryset = tasks.objects.all()
+    serializer_class = tasksSerializer
+
+    def perform_create(self, serializer):
+        title = self.request.data.get('title')
+        description = self.request.data.get('description')
+        deadline = self.request.data.get('deadline')
+        userID = self.request.data.get('user')
+        user = customUser(id=userID)
+        serializer.save(user=user, title=title, description=description, deadline=deadline)
 
 
 
