@@ -39,9 +39,20 @@ const Calendar = () => {
         ReactModal.setAppElement('#root');
     }, []);
 
+    const getUserToken = () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            return token;
+        }
+        else {
+            return console.error("Token not found");
+        }
+    }
+
     useEffect(() => {
+        let isMounted = true;
         const fetchUser = async () => {
-            const token = localStorage.getItem('token');
+            const token = getUserToken();
             if (!token) {
                 console.error('Token not found. User is not logged in');
                 return;
@@ -52,7 +63,9 @@ const Calendar = () => {
                         'Authorization': 'Token ' + token,
                     },
                 });
-                setUser(response.data.id);
+                if (isMounted) {
+                    setUser(response.data.id);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -60,6 +73,9 @@ const Calendar = () => {
     
         if (!user) {
             fetchUser();
+        }
+        return () => {
+            isMounted = false;
         }
     }, [user]);
     
@@ -87,7 +103,7 @@ const Calendar = () => {
             setCurrentDate(day);
             console.log("Prinitng inside handle day click...");
             console.log(currentDate);
-            const token = localStorage.getItem('token');
+            const token = getUserToken();
             if (!token) {
                 console.error('Token not found. User is not logged in');
                 return;
@@ -168,7 +184,7 @@ const Calendar = () => {
     };
 
     const handleTaskFormSubmit = async () => {
-        const token = localStorage.getItem('token');
+        const token = getUserToken();
         if (!token) {
             console.error('Token not found. User is not logged in');
             return;
@@ -187,7 +203,7 @@ const Calendar = () => {
         }
     };
 
-    const handleTaskForm = (e) => {
+    const handleTaskFormChange = (e) => {
         setTaskForm((prevTaskForm) => ({
             ...prevTaskForm,
             [e.target.name]: e.target.value,
@@ -203,11 +219,11 @@ const Calendar = () => {
                 <div>
                     <form onSubmit={handleTaskFormSubmit}>
                         <label>Title</label>
-                        <input name='title' onChange={handleTaskForm}/>
+                        <input name='title' onChange={handleTaskFormChange}/>
                         <label>Description</label>
-                        <input name='description' onChange={handleTaskForm}/>
+                        <input name='description' onChange={handleTaskFormChange}/>
                         <label>DeadLine</label>
-                        <input name='deadline' value={taskForm.deadline} onChange={handleTaskForm} readOnly/>
+                        <input name='deadline' value={taskForm.deadline} onChange={handleTaskFormChange} readOnly/>
                         <button type='submit'>Add</button>
                     </form>
                     <button type="button" onClick={toggleTaskForm}>Close</button>
