@@ -141,10 +141,14 @@ const Calendar = () => {
 
     const renderHeader = () => (
         <div className='header'>
-            <h2>{currentMonth.format('MMMM YYYY')}</h2>
-            <div>
-                <button onClick={prevMonth} className='prev_button'>Previous</button>
-                <button onClick={nextMonth} className='next_button'>Next</button>
+            <div className='button-container'>
+                <button onClick={prevMonth} className='btn-btn-large'>Previous</button>
+            </div>
+            <div className='title-container'>
+                <h1 className='title'>{currentMonth.format('MMMM YYYY')}</h1>
+            </div>
+            <div className='button-container'>
+                <button onClick={nextMonth} className='btn-btn-large'>Next</button>
             </div>
         </div>
     );
@@ -246,7 +250,7 @@ const Calendar = () => {
     return (
         <div className='calendar'>
             {renderHeader()}
-            <div className='days'>{renderDays()}</div>
+            <div className='calendar'>{renderDays()}</div>
             <ReactModal isOpen={popupVisible} onRequestClose={() => togglePopup()}>
                 {popupContent()}
             </ReactModal>
