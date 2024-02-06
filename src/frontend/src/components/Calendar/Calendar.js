@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
+import { FaArrowRightLong } from "react-icons/fa6";
 import moment from 'moment';
 import axios from 'axios';
 import './Calendar.css';
@@ -142,13 +143,20 @@ const Calendar = () => {
     const renderHeader = () => (
         <div className='header'>
             <div className='button-container'>
-                <button onClick={prevMonth} className='btn-btn-large'>Previous</button>
+                <button onClick={prevMonth} className='btn-btn-large'>
+                    <span className='btn-logo'>
+                    </span>
+                </button>
             </div>
             <div className='title-container'>
                 <h1 className='title'>{currentMonth.format('MMMM YYYY')}</h1>
             </div>
             <div className='button-container'>
-                <button onClick={nextMonth} className='btn-btn-large'>Next</button>
+                <button onClick={nextMonth} className='btn-btn-large'>
+                    <span className='btn-logo'>
+                        <FaArrowRightLong className='right-arrow-long' />
+                    </span>
+                </button>
             </div>
         </div>
     );
