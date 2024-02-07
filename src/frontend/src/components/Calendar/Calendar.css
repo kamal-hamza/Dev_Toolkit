@@ -1,49 +1,39 @@
+body {
+    @apply bg-bg
+}
+
 .header {
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    background-color: #222222;
+    @apply flex justify-center
 }
 
-.button-container,
-.title-container {
-    display: flex;
-    align-items: center;
-    padding: 15px;
+.glass {
+    @apply w-full h-full bg-ebg backdrop-filter backdrop-blur-lg saturate-150 rounded-lg m-10 transition duration-300 ease-in;
 }
 
-.calendar {
-    justify-content: center;
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: blue;
-}
-
-.title {
-    font-family: 'Roboto' ,sans-serif;
-    font-size: 60px;
-    margin: 0;
+.container {
+    @apply flex justify-between items-center p-5 rounded-lg text-txtc;
 }
 
 .btn-btn-large {
-    cursor: pointer;
-    padding: 7px;
-    width: 150px;
-    height: 35px;
-    font-family: 'Roboto', sans-serif;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.1s ease;
-    background-color: #222222;
+    @apply flex justify-center items-center w-40 h-10 rounded-lg p-2 text-txtc bg-ebg transition duration-300 ease-in;
 }
 
 .btn-btn-large:hover {
-    background-color: #EFEFEF;
+    @apply hover:shadow-lg;
 }
 
-.right-arrow-long {
-    
+.btn-text {
+    @apply p-10 uppercase font-bold text-center;
+}
+
+.title {
+    @apply uppercase font-bold;
+}
+
+.right-arrow {
+    @apply text-3xl
+}
+
+.left-arrow {
+    @apply text-3xl;
 }

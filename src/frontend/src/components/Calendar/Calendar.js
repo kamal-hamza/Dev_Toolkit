@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
-import { FaArrowRightLong } from "react-icons/fa6";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import moment from 'moment';
 import axios from 'axios';
 import './Calendar.css';
@@ -142,21 +142,28 @@ const Calendar = () => {
 
     const renderHeader = () => (
         <div className='header'>
-            <div className='button-container'>
-                <button onClick={prevMonth} className='btn-btn-large'>
-                    <span className='btn-logo'>
-                    </span>
-                </button>
-            </div>
-            <div className='title-container'>
-                <h1 className='title'>{currentMonth.format('MMMM YYYY')}</h1>
-            </div>
-            <div className='button-container'>
-                <button onClick={nextMonth} className='btn-btn-large'>
-                    <span className='btn-logo'>
-                        <FaArrowRightLong className='right-arrow-long' />
-                    </span>
-                </button>
+            <div className='glass'>
+                <div className='container'>
+                    <div className='button-container'>
+                        <button onClick={prevMonth} className='btn-btn-large'>
+                            <span className='btn-logo'>
+                                <IoIosArrowBack className='left-arrow'/>
+                            </span>
+                            <span className='btn-text'>Previous</span>
+                        </button>
+                    </div>
+                    <div className='title-container'>
+                        <h1 className='title'>{currentMonth.format('MMMM YYYY')}</h1>
+                    </div>
+                    <div className='button-container'>
+                        <button onClick={nextMonth} className='btn-btn-large'>
+                            <span className='btn-text'>Next</span>
+                            <span className='btn-logo'>
+                                <IoIosArrowForward className='right-arrow'/>
+                            </span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -258,7 +265,11 @@ const Calendar = () => {
     return (
         <div className='calendar'>
             {renderHeader()}
-            <div className='calendar'>{renderDays()}</div>
+            <div className='calendar'>
+                <div className='container'>
+                    {renderDays()}
+                </div>
+            </div>
             <ReactModal isOpen={popupVisible} onRequestClose={() => togglePopup()}>
                 {popupContent()}
             </ReactModal>
