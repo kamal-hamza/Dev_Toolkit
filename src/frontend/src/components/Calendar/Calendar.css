@@ -7,19 +7,15 @@ body {
 }
 
 .glass {
-    @apply w-full h-full bg-ebg backdrop-filter backdrop-blur-lg saturate-150 rounded-lg m-10 transition duration-300 ease-in;
+    @apply w-full h-full backdrop-filter backdrop-blur-lg saturate-150 rounded-lg m-10 transition duration-300 ease-in;
 }
 
 .container {
-    @apply flex justify-between items-center p-5 rounded-lg text-txtc;
+    @apply flex justify-between items-center p-5 rounded-lg text-txt;
 }
 
 .btn-btn-large {
-    @apply flex justify-center items-center w-40 h-10 rounded-lg p-2 text-txtc bg-ebg transition duration-300 ease-in;
-}
-
-.btn-btn-large:hover {
-    @apply hover:shadow-lg;
+    @apply flex justify-center items-center w-48 h-10 rounded-lg p-2 text-txt bg-bg font-sans;
 }
 
 .btn-text {
@@ -27,7 +23,7 @@ body {
 }
 
 .title {
-    @apply uppercase font-bold;
+    @apply uppercase font-bold font-sans text-3xl;
 }
 
 .right-arrow {

@@ -9,10 +9,15 @@ module.exports = {
   theme: {
     colors: {
       bg: '#33333d',
-      ebg: '#373740',
-      txtc: 'whitesmoke',
+      txt: '#F5F5DC',
     },
-    extend: {},
+    fontFamily: {
+      'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+    },
+    extend: {
+      '128': '32rem',
+      '144': '36rem',
+    },
   },
   plugins: [],
 }
