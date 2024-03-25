@@ -73,7 +73,6 @@ class return_tasks(APIView):
         if not date:
             return JsonResponse({'error': 'Invalid date passed'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            print(date)
             tasks_data = tasks.objects.filter(user=currentUser, deadline=date)
             serializer = tasksSerializer(tasks_data, many=True)
             return JsonResponse({'tasks': serializer.data, 'message': 'Here are the tasks'}, status=status.HTTP_200_OK)

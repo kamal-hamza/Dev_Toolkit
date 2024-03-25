@@ -81,7 +81,7 @@ const Calendar = () => {
     }, [user]);
     
 
-    useEffect(() => {
+    useEffect(() => {                                                                                 
         const fetchData = async () => {
             try {
                 const response = await axios.get(CSRF_TOKEN_URL);
@@ -268,7 +268,7 @@ const Calendar = () => {
                     {renderDays()}
                 </div>
             </div>
-            <ReactModal isOpen={popupVisible} onRequestClose={() => togglePopup()}>
+            <ReactModal isOpen={popupVisible} onRequestClose={() => togglePopup()} portalClassName="modal">
                 {popupContent()}
             </ReactModal>
         </div>

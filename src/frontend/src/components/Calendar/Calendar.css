@@ -33,3 +33,7 @@ body {
 .left-arrow {
     @apply text-3xl;
 }
+
+.modal {
+    background-color: grey;
+}
