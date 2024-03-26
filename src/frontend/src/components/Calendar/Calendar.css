@@ -35,5 +35,9 @@ body {
 }
 
 .modal {
-    background-color: grey;
+    @apply bg-txt content-center text-center
+}
+
+.popupContent {
+    @apply bg-txt
 }

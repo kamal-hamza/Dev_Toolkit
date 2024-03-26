@@ -268,8 +268,10 @@ const Calendar = () => {
                     {renderDays()}
                 </div>
             </div>
-            <ReactModal isOpen={popupVisible} onRequestClose={() => togglePopup()} portalClassName="modal">
-                {popupContent()}
+            <ReactModal isOpen={popupVisible} onRequestClose={() => togglePopup()} className="modal" overlayClassName="modal">
+                <div className='popupContent'>
+                    {popupContent()}
+                </div>
             </ReactModal>
         </div>
     );
